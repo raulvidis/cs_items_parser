@@ -64,9 +64,13 @@ class ItemsManager:
         self.__delete_empty_prefabs()
 
     def __delete_unnecessary_data(self):
-        for key in ["campaign_definitions", "quest_schedule", "skirmish_modes", "skirmish_rank_info", "recipes", "pro_event_results", "pro_players", "pro_teams", "items_game_live"]:
-            del self.items_game[key]
-        self.logger.debug(f"Deleted unnecessary data")
+        keys_to_delete = ["campaign_definitions", "quest_schedule", "skirmish_modes", "skirmish_rank_info", "recipes", "pro_event_results", "pro_players", "pro_teams", "items_game_live"]
+        deleted_count = 0
+        for key in keys_to_delete:
+            if key in self.items_game:
+                del self.items_game[key]
+                deleted_count += 1
+        self.logger.debug(f"Deleted {deleted_count} unnecessary data keys")
 
     def __merge_duplicate_keys_root(self):
         # Merge duplicate keys in root level to make things easier
